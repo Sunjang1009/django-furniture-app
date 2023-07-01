@@ -31,7 +31,7 @@ class BrandList(TemplateView):
             context["header"] = f"Searching for {name}"
         else:    
             context["brands"] = Brand.objects.all()
-            context["header"] = "Treanding Brands for Furniture"
+            context["header"] = "Trending Brands for Furniture"
         return context
 
 class BrandCreate(CreateView):
