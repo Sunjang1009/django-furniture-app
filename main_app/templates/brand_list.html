@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Furniture Brands{% endblock %}
+
+{% block content %}
+
+<h1 class="title pt-5">{{header}}</h1>
+<!-- add search bar -->
+<form class="mb-5" method="get">
+    <div class="field has-addons">
+        <div class="control">
+            <input class="input" type="text" name="name" placeholder="brand's name" />
+        </div>
+        <div class="control">
+            <input class="button is-success" type="submit" value="Search" />
+        </div>
+    </div>
+    <a class="button is-dark" href="{% url 'brand_list' %}">Clear Search</a>
+    <a class="button is-dark" href="{% url 'brand_create' %}">Add Brand</a>
+</form>
+
+<div class="gallery">
+    {% for brand in brands %}
+        <a href="{% url 'brand_detail' brand.pk %}">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image is-square">
+                        <img src="{{brand.image}}" alt="{{brand.name}}" />
+                    </figure>
+                </div>
+                <div class="card-header">
+                    <p class="card-header-title">{{brand.name}}</p>
+                </div>
+            </div>
+        </a>
+    {% empty %}
+        <article class="message">
+            <div class="message-header">
+                <p>No Brands Available</p>
+            </div>
+        </article>
+    {% endfor %}
+</div>
+{% endblock %}
+

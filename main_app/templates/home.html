@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="home__shoppinglists">
+    {% for shoppinglist in shoppinglists%}
+        <div class="shoppinglist mb-5">
+            <h3 class="title is-e has-text-success">{{shoppinglist.name}}</h3>
+            <hr />
+            {% for product in shoppinglist.products.all %}
+            <div class="product">
+                <span>{{forloop.counter}}</span>
+                <span><b>{{product.name}}</b></span>
+                <span>{{product.color}}</span>
+                <span>{{product.get_price}}</span>
+                <span>
+                    <a href="{% url 'shoppinglist_product_assoc' shoppinglist.pk product.pk %}?assoc=remove" class="button is-danger is-outlined">
+                        <span class="icon is-small">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </a>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+    {% empty %}
+        <div class="shoppinglist mb-5">"There are no products in this shoppinglist"</div>
+    
+    {% endfor %}
+</div>
+{% endblock %}
+

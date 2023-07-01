@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="detail__img">
+    <img src="{{brand.image}}" alt="{{brand.name}}" />
+</div>
+<div class="detail__name">
+    {% if brand.verified_brand %}
+        <div class="icon-text">
+            <span class="icon has-text-info">
+                <i class="fas fa-check-circle"></i>
+            </span>
+            <span>Verified</span>
+        </div>
+    {% endif %}
+        <h1 class="title">{{brand.name}}</h1>
+</div>
+<div class="detail__container">
+    <div class="buttons">
+        <a href="{% url 'brand_update' brand.pk %}" class="button is-info">Updates
+            <span class="icon">
+                <i class="fas fa-edit"></i>
+            </span>
+        </a>
+        <a href="{% url 'brand_delete' brand.pk %}" class="button is-danger">Delete
+            <span class="icon">
+                <i class="fas fa-trash-alt"></i>
+            </span>
+        </a>
+    </div>
+    <form class="mb-5" action="{% url 'product_create' brand.pk %}" method="post">
+        {% csrf_token %}
+        <div class="field has-addons">
+            <div class="control">
+                <input class="input" type="text" name="name" placeholder="Name" required />
+            </div>
+            <div class="control">
+                <input class="input" type="text" name="color" placeholder="Color" required />
+            </div>
+            <div class="control">
+                <input class="input" type="text" name="price" placeholder="Price" required />
+            </div>
+            <div class="control">
+                <input class="button is-primary" type="submit" value="Add a Product">
+            </div>
+        </div>
+    </form>
+    <div class="detail__products mb-5">
+        <h3 class="title is-3">Products</h3>
+        {% for product in brand.products.all %}
+            <div class="product">
+                <span>{{forloop.counter}}</span>
+                <span><b>{{product.name}}</b></span>
+                <span>{{product.color}}</span>
+                <span>{{product.get_price}}</span>
+                <span>
+                    <div class="dropdown">
+                        <div class="dropdown-trigger">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                <span>Add to Shoppinglist</span>
+                                <span class="icon is-small">
+                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                            <div class="dropdown-content">
+                                {% for shoppinglist in shoppinglists%}
+                                    <a href="{% url 'shoppinglist_product_assoc' shoppinglist.pk product.pk %}?assoc=add" class="dropdown-item">{{shoppinglist.name}}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+        {% empty %}
+            <article class="message">
+                <div class="message-header">
+                    <p>No Products Available</p>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+    <div class="detail__about">
+        <h4 class="title is-4">About</h4>
+        <p>{{brand.bio}}</p>
+    </div>
+</div>
+
+{% endblock %}
+
