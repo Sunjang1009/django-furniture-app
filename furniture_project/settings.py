@@ -93,10 +93,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 DATABASES = {
     'default': dj_database_url.config(
-        # Feel free to alter this value to suit your needs.
-        default='postgresql://postgres:postgres@localhost:5432/mysite',
-        conn_max_age=600,
-        conn_health_checks=True,
+        default=f"postgres://{os.environ['DB_USER']}:{os.environ['DB_PW']}@{os.environ['DB_HOST']}/furniture?sslmode=require", conn_max_age=600, conn_health_checks=True
     ),
 #   'default': {
 #     'ENGINE': 'django.db.backends.postgresql',
