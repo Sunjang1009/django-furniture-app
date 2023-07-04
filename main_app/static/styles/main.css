@@ -1,6 +1,9 @@
 body {
     /* background-color: white; */
-    background: url("/static/img/mini_project_bg.png") 50% 0 no-repeat fixed;
+    background-image: url('/static/img/bg.png');
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+    background-size: 100%;
     color: darkgreen;
     min-height: 100vh;
 }
